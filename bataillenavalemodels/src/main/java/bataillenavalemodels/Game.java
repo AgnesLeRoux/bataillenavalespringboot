@@ -10,7 +10,7 @@ public class Game implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public enum GameStatus{open, play, over};
+	public enum GameStatus{open, ongoing, over};
 	
 	
 	private long idGame;

@@ -14,7 +14,8 @@ public class Grid implements Serializable
 	private long idGrid;
 	private int nbRows=10;
 	private int nbCols=10;
-	private boolean[][] stateTab = new boolean[nbRows][nbCols];
+	private boolean[][] stateTab = new boolean[nbRows][nbCols];//the cell is shooted
+	private boolean[][] boatTab = new boolean[nbRows][nbCols];//the cell contains a boat or not
 	private List<Boat> boats = new ArrayList<Boat>();
 	public Grid() {
 		super();
@@ -54,6 +55,12 @@ public class Grid implements Serializable
 	public String toString() {
 		return "Grid [idGrid=" + idGrid + ", nbRows=" + nbRows + ", nbCols=" + nbCols + ", stateTab="
 				+ Arrays.toString(stateTab) + ", boats=" + boats + "]";
+	}
+	public boolean[][] getBoatTab() {
+		return boatTab;
+	}
+	public void setBoatTab(boolean[][] boatTab) {
+		this.boatTab = boatTab;
 	}
 		
 	
