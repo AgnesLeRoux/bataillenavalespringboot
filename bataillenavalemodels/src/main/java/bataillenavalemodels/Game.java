@@ -88,6 +88,13 @@ public class Game implements Serializable
 	public void setIdGame(long idGame) {
 		this.idGame = idGame;
 	}
+
+	@Override
+	public String toString() {
+		return "Game [idGame=" + idGame + ", finished=" + finished + ", nbMovesMax=" + nbMovesMax + ", nbMoves="
+				+ nbMoves + ", currentPlayer=" + currentPlayer + ", player1=" + player1 + ", player2=" + player2
+				+ ", grid1=" + grid1 + ", grid2=" + grid2 + "]";
+	}
 	
 	
 

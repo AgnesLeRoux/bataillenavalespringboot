@@ -50,6 +50,11 @@ public class Grid implements Serializable
 	public void setIdGrid(long idGrid) {
 		this.idGrid = idGrid;
 	}
+	@Override
+	public String toString() {
+		return "Grid [idGrid=" + idGrid + ", nbRows=" + nbRows + ", nbCols=" + nbCols + ", stateTab="
+				+ Arrays.toString(stateTab) + ", boats=" + boats + "]";
+	}
 		
 	
 	
