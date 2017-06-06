@@ -9,8 +9,12 @@ public class Game implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public enum GameStatus{open, play, over};
+	
+	
 	private long idGame;
-	private boolean finished; // true if the game is over
+	private GameStatus status; 
 	private final int nbMovesMax = 60;
 	private int nbMoves;
 	private int currentPlayer; //1 for player 1  and 2 for player 2
@@ -18,6 +22,7 @@ public class Game implements Serializable
 	private Player player2;
 	private Grid grid1;
 	private Grid grid2;
+	private Player winner;
 	
 	public Game() {
 		super();
@@ -28,39 +33,26 @@ public class Game implements Serializable
 		return currentPlayer;
 	}
 
-
 	public void setCurrentPlayer(int currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-
 
 	public Player getPlayer1() {
 		return player1;
 	}
 
-
 	public void setPlayer1(Player player1) {
 		this.player1 = player1;
 	}
-
 
 	public Player getPlayer2() {
 		return player2;
 	}
 
-
 	public void setPlayer2(Player player2) {
 		this.player2 = player2;
 	}
 	
-	
-
-	public boolean isFinished() {
-		return finished;
-	}
-	public void setFinished(boolean finished) {
-		this.finished = finished;
-	}
 	public int getNbMoves() {
 		return nbMoves;
 	}
@@ -89,13 +81,31 @@ public class Game implements Serializable
 		this.idGame = idGame;
 	}
 
+	public GameStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(GameStatus status) {
+		this.status = status;
+	}
+
+	public int getNbMovesMax() {
+		return nbMovesMax;
+	}
+
+	public Player getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Player winner) {
+		this.winner = winner;
+	}
+
 	@Override
 	public String toString() {
-		return "Game [idGame=" + idGame + ", finished=" + finished + ", nbMovesMax=" + nbMovesMax + ", nbMoves="
-				+ nbMoves + ", currentPlayer=" + currentPlayer + ", player1=" + player1 + ", player2=" + player2
-				+ ", grid1=" + grid1 + ", grid2=" + grid2 + "]";
+		return "Game [idGame=" + idGame + ", status=" + status + ", nbMovesMax=" + nbMovesMax + ", nbMoves=" + nbMoves
+				+ ", currentPlayer=" + currentPlayer + ", player1=" + player1 + ", player2=" + player2 + ", grid1="
+				+ grid1 + ", grid2=" + grid2 + ", winner=" + winner + "]";
 	}
-	
-	
 
 }
