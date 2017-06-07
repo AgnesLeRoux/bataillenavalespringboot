@@ -5,34 +5,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import bataillenavalemodels.Boat.Orientation;
 import bataillenavalemodels.factories.BoatFactory;
 
+@Entity
 public class Grid implements Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idGrid;
 	private int nbRows=10;
 	private int nbCols=10;
 
+	@Transient
 	private boolean[][] stateTab = new boolean[nbRows][nbCols];//true if the cell is shooted (discovered)
+	@OneToMany(mappedBy="grid")
 	private List<Cell> cells = new ArrayList<Cell>();
 
+	@Transient
 	private boolean[][] boatTab = new boolean[nbRows][nbCols];//the cell contains a boat or not
+	
+	@OneToMany(mappedBy="grid")
 	private List<Boat> boats = new ArrayList<Boat>();
-
-
 
 	public Grid() {
 		super();
 
 		for(int i=0; i< nbRows;i++)
 			for(int j=0;j<nbCols;j++)
-				cells.add(new Cell(i,j));
-
+			{
+				Cell cell = new Cell(i,j);
+				cell.setGrid(this);
+				cells.add(cell);
+				
+			}
 		boats.add(BoatFactory.computeNewBoat(5, this));
 
 		for(Boat b : boats)

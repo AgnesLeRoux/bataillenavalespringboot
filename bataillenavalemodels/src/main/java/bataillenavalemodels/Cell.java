@@ -2,21 +2,33 @@ package bataillenavalemodels;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Cell implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	private int coord1;
 	private int coord2;
 	private boolean containsBoat;
 	private boolean isShooted;
+	@ManyToOne
+	private Grid grid;
 	
-	public Cell() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+//	public Cell() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
 	
 	public Cell(int coord1, int coord2)
 	{
@@ -62,5 +74,13 @@ public class Cell implements Serializable{
 				+ isShooted + "]";
 	}
 
-	
+	public void setGrid(Grid grid) 
+	{
+		this.grid = grid;
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
 }

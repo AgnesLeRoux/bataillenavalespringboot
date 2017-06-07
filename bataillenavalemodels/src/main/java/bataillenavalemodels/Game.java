@@ -8,39 +8,51 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.util.Properties;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+@Entity
 public class Game implements Serializable
 {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	
 	public enum GameStatus{open, ongoing, over};
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idGame;
+	@Enumerated(EnumType.STRING)
 	private GameStatus status; 
 	private final int nbMovesMax;// = 10;//60;
 	private int nbMoves;
 	private int currentPlayer; //1 for player 1  and 2 for player 2
+	@OneToOne
 	private Player player1;
+	@OneToOne
 	private Player player2;
+	@OneToOne
 	private Grid grid1;
+	@OneToOne
 	private Grid grid2;
 	private int nbPointPlayer1;
 	private int nbPointPlayer2;
+	@OneToOne
 	private Player winner;
 	
+	@Transient
 	private Properties properties = new Properties();
 	
 	
-	
-	
 	//////////////////////////////////////////////////////////////////////////////////////
-//	public void receiveShoot(int coord1, int coord2)
-//	{
-//		//TODO
-//	}
+
 	
 	public void initializeGame(Player player)
 	{
@@ -75,7 +87,6 @@ public class Game implements Serializable
 		{
 			this.nbPointPlayer2 += grid1.receiveShoot(shoot.getCoord1(), shoot.getCoord2());
 		}
-		
 		
 		currentPlayer = (currentPlayer==1)?2:1; //switch currentPlayer id
 		
@@ -120,15 +131,15 @@ public class Game implements Serializable
 		super();
 		this.grid1 = new Grid();
 		this.grid2 = new Grid();
-		try {
-			BufferedReader in = new BufferedReader(new FileReader("properties/config.properties"));
-			this.properties.load(in);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		this.nbMovesMax = Integer.parseInt(properties.getProperty("nbMovesMax"));
+//		try {
+//			BufferedReader in = new BufferedReader(new FileReader("properties/config.properties"));
+//			this.properties.load(in);
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		this.nbMovesMax = 10;//Integer.parseInt(properties.getProperty("nbMovesMax"));
 	}
 	
 	public int getCurrentPlayer() {

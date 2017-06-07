@@ -2,6 +2,15 @@ package bataillenavalemodels;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Boat implements Serializable {
 
 	/**
@@ -11,13 +20,27 @@ public class Boat implements Serializable {
 
 	public enum Orientation{vertical,horizontal}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	private int size;
+	@Enumerated(EnumType.STRING)
 	private Orientation orientation;
 	//coordinates of the left top square
 	private int coord1;
 	private int coord2;
+	@ManyToOne
+	private Grid grid;
 
 	//////////////////////////////////////////////////////////////////
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
 
 	public boolean overlap(Boat boat) 
 	{

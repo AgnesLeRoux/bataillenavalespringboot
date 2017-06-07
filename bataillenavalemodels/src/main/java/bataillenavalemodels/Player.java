@@ -4,18 +4,32 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Player implements Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idPlayer;
 	private String nickname;
 	private int nbWin;
 	private int nbLose;
 	private int nbDraw;
+	
+	@ElementCollection
 	private List<Long> gamesId = new ArrayList<Long>();
+	@OneToOne
 	private Game currentGame;
 
 	///////////////////////////////////////////////////////////////////////////////////

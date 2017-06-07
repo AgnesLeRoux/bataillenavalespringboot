@@ -12,11 +12,12 @@ public class BoatFactory
 	
 	private static Random rnd = new Random(42);
 	
-	
 	public static Boat computeNewBoat(int size, Grid grid )
 	{
 		Boat boat = new Boat();
+		boat.setGrid(grid);
 		boat.setSize(size);
+		
 		int nbRows = grid.getNbRows();
 		int nbCols = grid.getNbCols();
 		

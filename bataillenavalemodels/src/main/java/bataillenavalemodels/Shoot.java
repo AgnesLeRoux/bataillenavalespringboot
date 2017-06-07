@@ -1,8 +1,6 @@
 package bataillenavalemodels;
 
-import java.io.Serializable;
-
-public class Shoot implements Serializable {
+public class Shoot {
 
 	private int coord1;
 	private int coord2;
