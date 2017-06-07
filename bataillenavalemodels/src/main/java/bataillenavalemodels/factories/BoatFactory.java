@@ -16,23 +16,24 @@ public class BoatFactory
 	public static Boat computeNewBoat(int size, Grid grid )
 	{
 		Boat boat = new Boat();
+		boat.setSize(size);
 		int nbRows = grid.getNbRows();
 		int nbCols = grid.getNbCols();
 		
 		boolean boatOverlap = true;
 		while(boatOverlap)
 		{
-			if(rnd.nextInt(1) == 0)
+			if(rnd.nextBoolean())
 			{
 				boat.setOrientation(Orientation.vertical);
-				boat.setCoord1(rnd.nextInt(nbRows-size));
+				boat.setCoord1(rnd.nextInt(nbRows-size+1));
 				boat.setCoord2(rnd.nextInt(nbCols));
 			}
 			else
 			{
 				boat.setOrientation(Orientation.horizontal);
 				boat.setCoord1(rnd.nextInt(nbRows));
-				boat.setCoord2(rnd.nextInt(nbCols-size));
+				boat.setCoord2(rnd.nextInt(nbCols-size+1));
 			}
 			
 			boatOverlap = false;
@@ -45,7 +46,7 @@ public class BoatFactory
 				}
 			}
 		}
-		
+		System.out.println(boat);
 		return boat;
 	}
 	
