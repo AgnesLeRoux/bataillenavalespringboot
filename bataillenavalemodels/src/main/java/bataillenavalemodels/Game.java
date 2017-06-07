@@ -1,6 +1,12 @@
 package bataillenavalemodels;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Serializable;
+import java.util.Properties;
 
 public class Game implements Serializable
 {
@@ -14,7 +20,7 @@ public class Game implements Serializable
 	
 	private long idGame;
 	private GameStatus status; 
-	private final int nbMovesMax = 10;//60;
+	private final int nbMovesMax;// = 10;//60;
 	private int nbMoves;
 	private int currentPlayer; //1 for player 1  and 2 for player 2
 	private Player player1;
@@ -24,6 +30,11 @@ public class Game implements Serializable
 	private int nbPointPlayer1;
 	private int nbPointPlayer2;
 	private Player winner;
+	
+	private Properties properties = new Properties();
+	
+	
+	
 	
 	//////////////////////////////////////////////////////////////////////////////////////
 //	public void receiveShoot(int coord1, int coord2)
@@ -109,6 +120,15 @@ public class Game implements Serializable
 		super();
 		this.grid1 = new Grid();
 		this.grid2 = new Grid();
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("properties/config.properties"));
+			this.properties.load(in);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.nbMovesMax = Integer.parseInt(properties.getProperty("nbMovesMax"));
 	}
 	
 	public int getCurrentPlayer() {
