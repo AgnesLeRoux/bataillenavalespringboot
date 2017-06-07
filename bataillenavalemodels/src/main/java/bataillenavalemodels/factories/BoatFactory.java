@@ -10,36 +10,37 @@ public class BoatFactory
 {
 	//TODO the factory should be a singleton
 	
-	Random rnd = new Random();
+	private static Random rnd = new Random(42);
 	
 	
-	public Boat computeNewBoat(int size, Grid grid )
+	public static Boat computeNewBoat(int size, Grid grid )
 	{
 		Boat boat = new Boat();
 		int nbRows = grid.getNbRows();
 		int nbCols = grid.getNbCols();
 		
-		boolean boatDoesNotOverlap = false;
-		while(boatDoesNotOverlap)
+		boolean boatOverlap = true;
+		while(boatOverlap)
 		{
 			if(rnd.nextInt(1) == 0)
 			{
 				boat.setOrientation(Orientation.vertical);
-				boat.setCoord1(nbRows-size);
-				boat.setCoord2(nbCols);
+				boat.setCoord1(rnd.nextInt(nbRows-size));
+				boat.setCoord2(rnd.nextInt(nbCols));
 			}
 			else
 			{
 				boat.setOrientation(Orientation.horizontal);
-				boat.setCoord1(nbRows);
-				boat.setCoord2(nbCols-size);
+				boat.setCoord1(rnd.nextInt(nbRows));
+				boat.setCoord2(rnd.nextInt(nbCols-size));
 			}
-			boatDoesNotOverlap = true;
+			
+			boatOverlap = false;
 			for(Boat boatInGrid : grid.getBoats())
 			{
 				if(boatInGrid.overlap(boat))
 				{	
-					boatDoesNotOverlap = false;
+					boatOverlap = true;
 					break;
 				}
 			}
