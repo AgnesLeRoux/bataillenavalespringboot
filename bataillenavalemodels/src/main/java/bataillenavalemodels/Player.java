@@ -15,17 +15,38 @@ public class Player implements Serializable
 	private int nbWin;
 	private int nbLose;
 	private int nbDraw;
-	List<Integer> gamesId = new ArrayList<Integer>();
+	private List<Long> gamesId = new ArrayList<Long>();
+	private Game currentGame;
+
+	///////////////////////////////////////////////////////////////////////////////////
 	
+	public void playNewGame(GameManager gm)
+	{
+		gm.playNewGame(this);
+	}
 	
+	public void shoot(int coord1, int coord2) 
+	{
+		Shoot shoot = new Shoot(coord1, coord2, this);
+		currentGame.receiveShoot(shoot);
+	}
 	
+	public void quitGame()
+	{
+		currentGame = null;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////
 
 	public Player() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public Player(String nickname)
+	{
+		this.nickname = nickname;
+	}
 	
 	
 	public long getIdPlayer() {
@@ -36,11 +57,11 @@ public class Player implements Serializable
 		this.idPlayer = idPlayer;
 	}
 
-	public List<Integer> getGamesId() {
+	public List<Long> getGamesId() {
 		return gamesId;
 	}
 
-	public void setGamesId(List<Integer> gamesId) {
+	public void setGamesId(List<Long> gamesId) {
 		this.gamesId = gamesId;
 	}
 
@@ -69,13 +90,18 @@ public class Player implements Serializable
 		this.nbDraw = nbDraw;
 	}
 
+	public Game getCurrentGame() {
+		return currentGame;
+	}
 
-
+	public void setCurrentGame(Game currentGame) {
+		this.currentGame = currentGame;
+	}
 
 	@Override
 	public String toString() {
 		return "Player [idPlayer=" + idPlayer + ", nickname=" + nickname + ", nbWin=" + nbWin + ", nbLose=" + nbLose
-				+ ", nbDraw=" + nbDraw + ", gamesId=" + gamesId + "]";
+				+ ", nbDraw=" + nbDraw + ", gamesId=" + gamesId + ", currentGameId=" + currentGame.getIdGame() + "]";
 	}
 	
 }

@@ -46,7 +46,6 @@ public class BoatFactory
 				}
 			}
 		}
-		System.out.println(boat);
 		return boat;
 	}
 	

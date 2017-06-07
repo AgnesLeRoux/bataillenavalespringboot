@@ -12,21 +12,103 @@ public class Game implements Serializable
 	
 	public enum GameStatus{open, ongoing, over};
 	
-	
 	private long idGame;
 	private GameStatus status; 
-	private final int nbMovesMax = 60;
+	private final int nbMovesMax = 10;//60;
 	private int nbMoves;
 	private int currentPlayer; //1 for player 1  and 2 for player 2
 	private Player player1;
 	private Player player2;
 	private Grid grid1;
 	private Grid grid2;
+	private int nbPointPlayer1;
+	private int nbPointPlayer2;
 	private Player winner;
 	
+	//////////////////////////////////////////////////////////////////////////////////////
+//	public void receiveShoot(int coord1, int coord2)
+//	{
+//		//TODO
+//	}
+	
+	public void initializeGame(Player player)
+	{
+		this.status = (GameStatus.open);
+		this.nbMoves = 0;
+		this.player1 = player;
+		this.currentPlayer = 1;
+		player.getGamesId().add(this.idGame);
+		player.setCurrentGame(this);
+	}
+	
+	public boolean receiveShoot(Shoot shoot)
+	{
+		if(status != GameStatus.ongoing)
+		{
+			//TODO : exception
+			System.err.println("unallowed shoot");
+			System.exit(9);
+		}
+		
+		if(currentPlayer == 1 && shoot.getPlayer() != player1 ||
+			currentPlayer == 2 && shoot.getPlayer() != player2)
+		{
+			return false;
+		}
+		
+		if(currentPlayer==1)
+		{
+			this.nbPointPlayer1 += grid2.receiveShoot(shoot.getCoord1(), shoot.getCoord2());
+		}
+		else
+		{
+			this.nbPointPlayer2 += grid1.receiveShoot(shoot.getCoord1(), shoot.getCoord2());
+		}
+		
+		
+		currentPlayer = (currentPlayer==1)?2:1; //switch currentPlayer id
+		
+		nbMoves++;
+		if(nbMoves >= nbMovesMax)//TODO count if the max nb of points is obtained
+			status = GameStatus.over;
+		
+		if(status == GameStatus.over)
+		{
+			computeWinner();
+			if(winner == player1)
+			{
+				player1.setNbWin( player1.getNbWin()+1) ;
+				player2.setNbLose( player2.getNbLose()+1) ;
+			}
+			if(winner == player2)
+			{
+				player2.setNbWin( player2.getNbWin()+1) ;
+				player1.setNbLose( player1.getNbLose()+1) ;
+			}
+			if(winner==null)
+			{
+				player2.setNbDraw( player2.getNbDraw()+1) ;
+				player1.setNbDraw( player1.getNbDraw()+1) ;
+			}
+		}
+		
+		return true;
+	}
+	
+	private void computeWinner() {
+		if(this.nbPointPlayer1 > this.nbPointPlayer2)
+			this.winner = player1;
+		if(this.nbPointPlayer2 > this.nbPointPlayer1)
+			this.winner = player2;
+		
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////
+
 	public Game() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.grid1 = new Grid();
+		this.grid2 = new Grid();
 	}
 	
 	public int getCurrentPlayer() {
@@ -93,6 +175,22 @@ public class Game implements Serializable
 		return nbMovesMax;
 	}
 
+	public int getNbPointPlayer1() {
+		return nbPointPlayer1;
+	}
+
+	public void setNbPointPlayer1(int nbPointPlayer1) {
+		this.nbPointPlayer1 = nbPointPlayer1;
+	}
+
+	public int getNbPointPlayer2() {
+		return nbPointPlayer2;
+	}
+
+	public void setNbPointPlayer2(int nbPointPlayer2) {
+		this.nbPointPlayer2 = nbPointPlayer2;
+	}
+
 	public Player getWinner() {
 		return winner;
 	}
@@ -107,5 +205,29 @@ public class Game implements Serializable
 				+ ", currentPlayer=" + currentPlayer + ", player1=" + player1 + ", player2=" + player2 + ", grid1="
 				+ grid1 + ", grid2=" + grid2 + ", winner=" + winner + "]";
 	}
+	
+	public String stateGameToString()
+	{
+		String str = "";
+		
+		if(status == GameStatus.ongoing)
+		{
+			str += "Player1 state\n";
+			str += grid1.boatsToString()+ "\n"+ grid2.myToString();
+			str += "Player2 state\n";
+			str += grid2.boatsToString()+"\n" +grid1.myToString();
+			str += "________________________________________________\n";
+			
+		}
+		else
+		{
+			str += "game over\n";
+			str += "the winner is" + winner +"\n" ;
+		}
+		
+		return str;
+		
+	}
+	
 
 }

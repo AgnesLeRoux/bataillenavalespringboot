@@ -114,6 +114,4 @@ public class Boat implements Serializable {
 				+ "]";
 	}
 
-
-
 }
