@@ -67,6 +67,7 @@ public class Grid implements Serializable
 			for(int c1 = b.getCoord1(); c1 < b.getCoord1()+b.getSize(); c1++)
 			{
 				boatTab[c1][c2]=true;
+				cells.get(convertCoord2Index(c1, c2)).setContainsBoat(true);
 			}
 		}
 		break;
@@ -76,6 +77,7 @@ public class Grid implements Serializable
 			for(int c2 = b.getCoord2(); c2 <b.getCoord2()+ b.getSize(); c2++)
 			{
 				boatTab[c1][c2]=true;
+				cells.get(convertCoord2Index(c1, c2)).setContainsBoat(true);
 			}
 		}
 		}

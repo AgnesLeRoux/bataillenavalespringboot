@@ -25,10 +25,10 @@ public class Cell implements Serializable{
 	@ManyToOne
 	private Grid grid;
 	
-//	public Cell() {
-//		super();
-//		// TODO Auto-generated constructor stub
-//	}
+	public Cell() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Cell(int coord1, int coord2)
 	{
