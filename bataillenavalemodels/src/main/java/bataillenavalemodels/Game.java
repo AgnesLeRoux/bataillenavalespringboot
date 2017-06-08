@@ -45,15 +45,13 @@ public class Game implements Serializable
 	private Grid grid2;
 	private int nbPointPlayer1;
 	private int nbPointPlayer2;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Player winner;
 	
 	@Transient
 	private Properties properties = new Properties();
 	
-	
 	//////////////////////////////////////////////////////////////////////////////////////
-
 	
 	public void initializeGame(Player player)
 	{
