@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,13 +31,13 @@ public class Grid implements Serializable
 
 	@Transient
 	private boolean[][] stateTab = new boolean[nbRows][nbCols];//true if the cell is shooted (discovered)
-	@OneToMany(mappedBy="grid")
+	@OneToMany(mappedBy="grid", cascade = CascadeType.ALL)
 	private List<Cell> cells = new ArrayList<Cell>();
 
 	@Transient
 	private boolean[][] boatTab = new boolean[nbRows][nbCols];//the cell contains a boat or not
 	
-	@OneToMany(mappedBy="grid")
+	@OneToMany(mappedBy="grid", cascade = CascadeType.ALL)
 	private List<Boat> boats = new ArrayList<Boat>();
 
 	public Grid() {

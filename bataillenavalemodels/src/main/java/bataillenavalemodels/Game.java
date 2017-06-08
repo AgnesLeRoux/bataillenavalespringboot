@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.util.Properties;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,9 +39,9 @@ public class Game implements Serializable
 	private Player player1;
 	@OneToOne
 	private Player player2;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Grid grid1;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Grid grid2;
 	private int nbPointPlayer1;
 	private int nbPointPlayer2;
