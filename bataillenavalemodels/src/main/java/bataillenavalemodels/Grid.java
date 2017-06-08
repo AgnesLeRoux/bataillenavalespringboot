@@ -83,12 +83,13 @@ public class Grid implements Serializable
 	public int receiveShoot(int coord1, int coord2)
 	{
 		stateTab[coord1][coord2] = true;
+		int point = 0;
+		if(boatTab[coord1][coord2] && !cells.get(convertCoord2Index(coord1, coord2)).isShooted())
+			point = 1;
+		
 		cells.get(convertCoord2Index(coord1,coord2)).setShooted(true);
-		if(boatTab[coord1][coord2])
-			return 1;
-		else
-			return 0;
-
+		return point;
+		
 	}
 
 	private int convertCoord2Index(int coord1, int coord2)
