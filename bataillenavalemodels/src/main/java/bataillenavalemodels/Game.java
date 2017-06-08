@@ -242,7 +242,7 @@ public class Game implements Serializable
 	{
 		String str = "";
 		
-		if(status == GameStatus.ongoing)
+		if(status != GameStatus.over)
 		{
 			str += "Player1 state\n";
 			str += grid1.boatsToString()+ "\n"+ grid2.myToString();
