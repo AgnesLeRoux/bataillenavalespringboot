@@ -10,7 +10,7 @@ public class BoatFactory
 {
 	//TODO the factory should be a singleton
 	
-	private static Random rnd = new Random(42);
+	private static Random rnd = new Random(73);
 	
 	public static Boat computeNewBoat(int size, Grid grid )
 	{

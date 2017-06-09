@@ -22,6 +22,7 @@ public class Launcher {
 		System.out.println(p2);
 		
 		Game g = p1.getCurrentGame();
+		System.out.println(g);
 //		System.out.println(g.stateGameToString());
 		p1.shoot(0,4);
 		

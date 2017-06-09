@@ -3,16 +3,34 @@ package bataillenavalemodels;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
+
 import bataillenavalemodels.Game.GameStatus;
 
+@Component
 public class GameManager 
 {
-	
-	//TODO singleton
-	private List<Game> games = new ArrayList<Game>();
+	private Iterable<Game> games = new ArrayList<Game>();
+	private Iterable<Player> players = new ArrayList<Player>();
 
+	@Autowired
+	private CrudRepository<Game, Long> gameRepository;
+	@Autowired
+	private CrudRepository<Player, Long> playerRepository;
+	
 	///////////////////////////////////////////////////////////////////////////////////
 
+	@PostConstruct
+	public void init()
+	{
+		games = gameRepository.findAll();
+		players = playerRepository.findAll();
+	}
+	
 	public void playNewGame(Player player) 
 	{
 		boolean hasFoundGame = false;
@@ -34,7 +52,7 @@ public class GameManager
 		{
 			Game g = new Game();
 			g.initializeGame(player);
-			games.add(g);
+			((List<Game>) games).add(g);
 		}
 		
 	}
@@ -42,11 +60,19 @@ public class GameManager
 	///////////////////////////////////////////////////////////////////////////////////
 	
 	public List<Game> getGames() {
-		return games;
+		return (List<Game>) games;
 	}
 
 	public void setGames(List<Game> games) {
 		this.games = games;
+	}
+
+	public List<Player> getPlayers() {
+		return (List<Player>) players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 
 	@Override
@@ -59,6 +85,4 @@ public class GameManager
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
 }

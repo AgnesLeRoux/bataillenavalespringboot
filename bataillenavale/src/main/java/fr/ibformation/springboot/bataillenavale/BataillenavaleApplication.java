@@ -32,7 +32,22 @@ public class BataillenavaleApplication {
 			for(Game g: gm.getGames())
 			{
 				gameRepository.save(g);
+				System.out.println("Game "+g);
+				System.out.println(g.stateGameToString());
 			}
+			
+			Player p2 = new Player("Agnes");
+			playerRepository.save(p2);
+			
+			p2.playNewGame(gm);
+			
+			for(Game g: gm.getGames())
+			{
+				gameRepository.save(g);
+			}
+			
+			playerRepository.save(p1);
+			playerRepository.save(p2);
 		};
 	}
 	
